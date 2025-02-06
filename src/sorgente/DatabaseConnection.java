@@ -1,4 +1,4 @@
-/*
+package sorgente;/*
 Luca Bisognin e Diego Ferventi - inizio 6/2/2025
 Classe DatabaseConnector per stabilire la connessione con il database
 */

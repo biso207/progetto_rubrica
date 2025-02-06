@@ -1,4 +1,6 @@
-package UI;
+package sorgente.UI;
+
+import sorgente.Student;
 
 import javax.swing.*;
 import java.sql.Date;
@@ -66,7 +68,7 @@ public class ModifyStudentPanel extends JPanel {
         txtCognome.setText(s.getCognome());
         txtTelefono.setText(s.getTelefono());
         txtEmail.setText(s.getEmail());
-        txtDataNascita.setText(Date.valueOf(s.getDataNascita()));
+        txtDataNascita.setText(String.valueOf(s.getDataNascita()));
         btnConfirm.setEnabled(true);
     }
 }

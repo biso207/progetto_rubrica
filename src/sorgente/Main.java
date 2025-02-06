@@ -1,9 +1,9 @@
-/*
+package sorgente;/*
 Luca Bisognin e Diego Ferventi - inizio 6/2/2025
-Classe Main del progetto Rubrica
+Classe sorgente.Main del progetto Rubrica
 */
 
-import UI.UIManager;
+import sorgente.UI.UIManager;
 
 import java.awt.*;
 

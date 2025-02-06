@@ -1,6 +1,6 @@
-/*
+package sorgente;/*
 Luca Bisognin e Diego Ferventi - inizio 6/2/2025
-Classe Student per creare gli oggetti che rappresentano gli studenti della rubrica
+Classe sorgente.Student per creare gli oggetti che rappresentano gli studenti della rubrica
 */
 
 import java.util.Date;
@@ -13,6 +13,8 @@ public class Student {
     // costruttore
     public Student(){
     }
+
+    // costruttore
     public Student(String nome, String cognome, String telefono, String email, String codiceFiscale, Date dataNascita) {
         this.nome = nome;
         this.cognome = cognome;
