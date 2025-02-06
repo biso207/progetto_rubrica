@@ -1,57 +1,90 @@
 package sorgente.UI;
 
+import sorgente.DatabaseConnection;
+import sorgente.Student;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class SearchStudentPanel extends JPanel {
-    private JTextField txtCdfSearch;
+    private JTextField txtCdfCer;
     private JButton btnSearch;
-    private JLabel lblNotFound, lblResult, lblCdf;
-
+    private JLabel lblNomeOut,lblCognomeOut,lblTelefonoOut,lblEmailOut,lblDataOut;
     public SearchStudentPanel() {
         setLayout(null);
 
-        // creazione label
-        add(createLabel("Nome", 36));
-        add(createLabel("Cognome", 68));
-        add(createLabel("Telefono", 100));
-        add(createLabel("Email", 132));
-        add(createLabel("Data di Nascita", 164));
-        add(createLabel("Codice Fiscale", 196));
+        txtCdfCer = new JTextField();
+        txtCdfCer.setColumns(10);
+        txtCdfCer.setBounds(128, 10, 96, 19);
+        add(txtCdfCer);
 
-        lblCdf = new JLabel("Codice Fiscale");
-        lblCdf.setBounds(10, 8, 200, 20);
-        add(lblCdf);
+        JLabel lblCdfCer = new JLabel("Codice Fiscale");
+        lblCdfCer.setBounds(10, 16, 96, 13);
+        add(lblCdfCer);
 
-        txtCdfSearch = new JTextField();
-        txtCdfSearch.setBounds(100, 10, 120, 20);
-        add(txtCdfSearch);
+        JButton btnCerca = new JButton("Cerca");
+        btnCerca.setBounds(10, 39, 85, 21);
+        add(btnCerca);
+        btnCerca.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Student s = DatabaseConnection.getInstance().ricercaStudente(txtCdfCer.getText());
+                    lblNomeOut.setText(s.getNome());
+                    lblCognomeOut.setText(s.getCognome());
+                    lblTelefonoOut.setText(s.getTelefono());
+                    lblEmailOut.setText(s.getEmail());
+                    lblDataOut.setText(s.getDataNascita().toString());
+                } catch (SQLException ex) {
+                    showNotFound();
+                }
+                ;
+            }
+        });
 
-        btnSearch = new JButton("Cerca");
-        btnSearch.setBounds(230, 10, 85, 19);
-        add(btnSearch);
+        JLabel lblNomeCer = new JLabel("Nome");
+        lblNomeCer.setBounds(10, 70, 69, 13);
+        add(lblNomeCer);
 
-        lblNotFound = new JLabel("");
-        lblNotFound.setBounds(10, 40, 200, 20);
-        add(lblNotFound);
+        JLabel lblCognomeCer = new JLabel("Cognome");
+        lblCognomeCer.setBounds(10, 96, 85, 13);
+        add(lblCognomeCer);
 
-        lblResult = new JLabel("");
-        lblResult.setBounds(10, 70, 400, 20);
-        add(lblResult);
-    }
+        JLabel lblTelefonoCer = new JLabel("Telefono");
+        lblTelefonoCer.setBounds(10, 128, 69, 13);
+        add(lblTelefonoCer);
 
-    public void showStudentData(String data) {
-        lblResult.setText(data);
+        JLabel lblEmailCer = new JLabel("Email");
+        lblEmailCer.setBounds(10, 154, 69, 13);
+        add(lblEmailCer);
+
+        JLabel lblDataCer = new JLabel("Data Di Nascita");
+        lblDataCer.setBounds(10, 185, 110, 13);
+        add(lblDataCer);
+
+        lblNomeOut = new JLabel("");
+        lblNomeOut.setBounds(128, 70, 139, 13);
+        add(lblNomeOut);
+
+        lblCognomeOut = new JLabel("");
+        lblCognomeOut.setBounds(128, 96, 96, 13);
+        add(lblCognomeOut);
+
+        lblTelefonoOut = new JLabel("");
+        lblTelefonoOut.setBounds(128, 128, 96, 13);
+        add(lblTelefonoOut);
+
+        lblEmailOut = new JLabel("");
+        lblEmailOut.setBounds(128, 154, 96, 13);
+        add(lblEmailOut);
+
+        lblDataOut = new JLabel("");
+        lblDataOut.setBounds(128, 185, 96, 13);
+        add(lblDataOut);
     }
 
     public void showNotFound() {
-        lblNotFound.setText("Studente NON trovato");
+        JOptionPane.showMessageDialog(null,"Studente NON trovato");
     }
-
-    // metodo per creare una label
-    private JLabel createLabel(String text, int y) {
-        JLabel label = new JLabel(text);
-        label.setBounds(10, y, 100, 13);
-        return label;
-    }
-
 }
