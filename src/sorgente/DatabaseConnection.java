@@ -24,8 +24,7 @@ public class DatabaseConnection {
             dataSource.setPortNumber(3306);
             dataSource.setServerName("127.0.0.1");
             dataSource.setUser("root");
-            //nel caso si possegga una password
-            //dataSource.setPassword("password");
+            dataSource.setPassword("root");
             con = dataSource.getConnection();
         }
         return con;
