@@ -7,16 +7,17 @@ import java.util.Date;
 
 public class Student {
     // attributi
-    private String nome, cognome, telefono, email, citta, codiceFiscale;
+    private String nome, cognome, telefono, email, codiceFiscale;
     private Date dataNascita;
 
     // costruttore
-    public Student(String nome, String cognome, String telefono, String email, String citta, String codiceFiscale, Date dataNascita) {
+    public Student(){
+    }
+    public Student(String nome, String cognome, String telefono, String email, String codiceFiscale, Date dataNascita) {
         this.nome = nome;
         this.cognome = cognome;
         this.telefono = telefono;
         this.email = email;
-        this.citta = citta;
         this.codiceFiscale = codiceFiscale;
         this.dataNascita = dataNascita;
     }
@@ -33,9 +34,6 @@ public class Student {
 
     // email
     public void setEmail(String email) { this.email = email; }
-
-    // città di residenza
-    public void setCitta(String citta) { this.citta = citta; }
 
     // codice fiscale
     public void setCodiceFiscale(String codiceFiscale) { this.codiceFiscale = codiceFiscale; }
@@ -56,9 +54,6 @@ public class Student {
     // email
     public String getEmail() { return email; }
 
-    // città di residenza
-    public String getCitta() { return citta; }
-
     // codice fiscale
     public String getCodiceFiscale() { return codiceFiscale; }
 
@@ -69,6 +64,6 @@ public class Student {
     @Override
     public String toString() {
         return nome + " " + cognome + " " + " " + telefono + " " + email +
-                " " + citta + " " + codiceFiscale + " " + dataNascita;
+                " " + codiceFiscale + " " + dataNascita;
     }
 }
