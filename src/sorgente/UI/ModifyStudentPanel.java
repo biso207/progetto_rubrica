@@ -15,16 +15,24 @@ public class ModifyStudentPanel extends JPanel {
     public ModifyStudentPanel() {
         setLayout(null);
 
-        // Campo per il codice fiscale e ricerca
+        // CODICE FISCALE //
+        // label di riferimento
+        JLabel lblCdfCer = new JLabel("Codice Fiscale");
+        lblCdfCer.setBounds(10, 12, 90, 13);
+        add(lblCdfCer);
+
+        // campo di testo per la digitazione del codice fiscale
         txtCdfSearch = new JTextField();
-        txtCdfSearch.setBounds(10, 10, 120, 19);
+        txtCdfSearch.setColumns(10);
+        txtCdfSearch.setBounds(110, 10, 90, 20);
         add(txtCdfSearch);
 
+        // pulsante per avviare la ricerca
         btnSearch = new JButton("Cerca");
-        btnSearch.setBounds(140, 10, 85, 21);
+        btnSearch.setBounds(210, 10, 85, 19);
         add(btnSearch);
 
-        // evento di ricerca associato al pulsante
+        // evento di ricerca associato al pulsante di ricerca
         btnSearch.addActionListener(e -> {
             // cliccabile solo se si scrive del testo nella casella del codice fiscale
             if (!txtCdfSearch.getText().isEmpty()) {
@@ -42,13 +50,14 @@ public class ModifyStudentPanel extends JPanel {
         lblNotFound.setBounds(10, 40, 200, 20);
         add(lblNotFound);
 
-        // Campi inizialmente nascosti
+        // campi di testo
         txtNome = createTextField(70);
         txtCognome = createTextField(96);
         txtTelefono = createTextField(128);
         txtEmail = createTextField(154);
         txtDataNascita = createTextField(185);
 
+        // creazione label
         add(createLabel("Nome", 70));
         add(createLabel("Cognome", 96));
         add(createLabel("Telefono", 128));
