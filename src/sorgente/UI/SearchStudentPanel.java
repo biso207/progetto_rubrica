@@ -16,6 +16,12 @@ public class SearchStudentPanel extends JPanel {
     public SearchStudentPanel() {
         setLayout(null);
 
+        // creazione labels
+        createLabels();
+
+        // creazione text fields
+        createTextFields();
+
         // CODICE FISCALE //
         // label di riferimento
         JLabel lblCdfCer = new JLabel("Codice Fiscale");
@@ -47,12 +53,6 @@ public class SearchStudentPanel extends JPanel {
             }
         });
 
-        // campi di testo per mostrare il risultato della ricerca
-        txtNome = createTextField(70);
-        txtCognome = createTextField(96);
-        txtTelefono = createTextField(128);
-        txtEmail = createTextField(154);
-        txtDataNascita = createTextField(185);
 
         // blocco edit
         txtNome.setEditable(false);
@@ -60,13 +60,6 @@ public class SearchStudentPanel extends JPanel {
         txtTelefono.setEditable(false);
         txtEmail.setEditable(false);
         txtDataNascita.setEditable(false);
-
-        // creazione label
-        add(createLabel("Nome", 70));
-        add(createLabel("Cognome", 96));
-        add(createLabel("Telefono", 128));
-        add(createLabel("Email", 154));
-        add(createLabel("Data di Nascita", 185));
     }
 
     // metodo per creare un campo di testo
@@ -82,6 +75,26 @@ public class SearchStudentPanel extends JPanel {
         JLabel label = new JLabel(text);
         label.setBounds(10, y, 100, 13);
         return label;
+    }
+
+    // metodo per creare i labels
+    public void createLabels() {
+        // creazione label
+        add(createLabel("Nome", 70));
+        add(createLabel("Cognome", 96));
+        add(createLabel("Telefono", 128));
+        add(createLabel("Email", 154));
+        add(createLabel("Data di Nascita", 185));
+    }
+
+    // metodo per creare i textFields
+    public void createTextFields() {
+        // campi di testo per mostrare il risultato della ricerca
+        txtNome = createTextField(70);
+        txtCognome = createTextField(96);
+        txtTelefono = createTextField(128);
+        txtEmail = createTextField(154);
+        txtDataNascita = createTextField(185);
     }
 
     // metodo per mostrare i risultati del testo nei campi di testo

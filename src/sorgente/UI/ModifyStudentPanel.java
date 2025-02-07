@@ -4,16 +4,24 @@ import sorgente.DatabaseConnection;
 import sorgente.Student;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
 
 public class ModifyStudentPanel extends JPanel {
     private JTextField txtCdfSearch, txtNome, txtCognome, txtTelefono, txtEmail, txtDataNascita;
     private JButton btnSearch, btnConfirm, btnCancel;
-    private JLabel lblNotFound;
 
     public ModifyStudentPanel() {
         setLayout(null);
+
+        // creazione labels
+        createLabels();
+
+        // creazione text fields
+        createTextFields();
+
 
         // CODICE FISCALE //
         // label di riferimento
@@ -27,18 +35,33 @@ public class ModifyStudentPanel extends JPanel {
         txtCdfSearch.setBounds(110, 10, 90, 20);
         add(txtCdfSearch);
 
+        // BUTTONS //
+        // conferma operazione modifica
+        btnConfirm = new JButton("Conferma");
+        btnConfirm.setBounds(10, 220, 85, 21);
+        btnConfirm.setEnabled(false);
+        add(btnConfirm);
+
         // pulsante per avviare la ricerca
         btnSearch = new JButton("Cerca");
         btnSearch.setBounds(210, 10, 85, 19);
         add(btnSearch);
 
-        // evento di ricerca associato al pulsante di ricerca
+        // annullamento operazione
+        btnCancel = new JButton("Annulla");
+        btnCancel.setBounds(139, 220, 85, 21);
+        add(btnCancel);
+
+        // EVENTS BUTTONS //
+        // ricerca studente
         btnSearch.addActionListener(e -> {
             // cliccabile solo se si scrive del testo nella casella del codice fiscale
             if (!txtCdfSearch.getText().isEmpty()) {
-                DatabaseConnection db = new DatabaseConnection();
                 try {
-                    Student s = db.ricercaStudente(txtCdfSearch.getText());
+                    // creazione oggetto studente studente
+                    Student s = DatabaseConnection.getInstance().ricercaStudente(txtCdfSearch.getText());
+
+                    // mostrati dati utente
                     showStudentData(s);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "STUDENTE NON TROVATO");
@@ -46,30 +69,23 @@ public class ModifyStudentPanel extends JPanel {
             }
         });
 
-        lblNotFound = new JLabel("");
-        lblNotFound.setBounds(10, 40, 200, 20);
-        add(lblNotFound);
+        // annullamento operazione
+        btnCancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // svuotamento text field
+                txtNome.setText("");
+                txtCognome.setText("");
+                txtTelefono.setText("");
+                txtEmail.setText("");
+                txtDataNascita.setText("");
+                txtCdfSearch.setText("");
 
-        // campi di testo
-        txtNome = createTextField(70);
-        txtCognome = createTextField(96);
-        txtTelefono = createTextField(128);
-        txtEmail = createTextField(154);
-        txtDataNascita = createTextField(185);
+                // blocco button conferma
+                btnConfirm.setEnabled(false);
+            }
+        });
 
-        // creazione label
-        add(createLabel("Nome", 70));
-        add(createLabel("Cognome", 96));
-        add(createLabel("Telefono", 128));
-        add(createLabel("Email", 154));
-        add(createLabel("Data di Nascita", 185));
-
-        btnConfirm = new JButton("Conferma");
-        btnConfirm.setBounds(10, 220, 85, 21);
-        btnConfirm.setEnabled(false);
-        add(btnConfirm);
-
-        // evento associato al pulsante di conferma
+        // conferma modifica studente
         btnConfirm.addActionListener(e -> {
             DatabaseConnection db = new DatabaseConnection();
 
@@ -90,10 +106,6 @@ public class ModifyStudentPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         });
-
-        btnCancel = new JButton("Annulla");
-        btnCancel.setBounds(139, 220, 85, 21);
-        add(btnCancel);
     }
 
     // metodo per creare un campo di testo
@@ -109,6 +121,26 @@ public class ModifyStudentPanel extends JPanel {
         JLabel label = new JLabel(text);
         label.setBounds(10, y, 100, 13);
         return label;
+    }
+
+    // metodo per creare i labels
+    public void createLabels() {
+        // creazione label
+        add(createLabel("Nome", 70));
+        add(createLabel("Cognome", 96));
+        add(createLabel("Telefono", 128));
+        add(createLabel("Email", 154));
+        add(createLabel("Data di Nascita", 185));
+    }
+
+    // metodo per creare i textFields
+    public void createTextFields() {
+        // campi di testo per mostrare il risultato della ricerca
+        txtNome = createTextField(70);
+        txtCognome = createTextField(96);
+        txtTelefono = createTextField(128);
+        txtEmail = createTextField(154);
+        txtDataNascita = createTextField(185);
     }
 
     // Metodo per abilitare stampare i testi dopo la ricerca

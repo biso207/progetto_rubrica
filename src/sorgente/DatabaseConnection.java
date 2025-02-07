@@ -7,9 +7,11 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 
 import java.sql.*;
 
-public class DatabaseConnection {
+public class DatabaseConnection implements Database<SQLException>{
     private Connection con;
     private static DatabaseConnection dc;
+
+    // metodo per creare un'istanza
     public static DatabaseConnection getInstance() {
         if(dc==null) {
             dc=new DatabaseConnection();
@@ -17,6 +19,7 @@ public class DatabaseConnection {
         return dc;
     }
 
+    @Override
     public Connection getConnection() throws SQLException {
         if (con==null){
             MysqlDataSource dataSource = new MysqlDataSource();
@@ -24,12 +27,13 @@ public class DatabaseConnection {
             dataSource.setPortNumber(3306);
             dataSource.setServerName("127.0.0.1");
             dataSource.setUser("root");
-            dataSource.setPassword("root");
+            //dataSource.setPassword("root");
             con = dataSource.getConnection();
         }
         return con;
     }
 
+    @Override
     public int aggiungiStudente(Student s) throws SQLException {
         String sql = "INSERT INTO studenti(nome,cognome,numTelefono,email,dataDiNascita,codiceFiscale) VALUES(?,?,?,?,?,?)";
         PreparedStatement ps = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -45,6 +49,7 @@ public class DatabaseConnection {
         return rs.getInt(1);
     }
 
+    @Override
     public Student ricercaStudente(String codiceFiscale) throws SQLException {
         String sql="SELECT nome,cognome,numTelefono,email,dataDiNascita FROM studenti WHERE codiceFiscale=?";
         PreparedStatement ps=getConnection().prepareStatement(sql);
@@ -61,6 +66,7 @@ public class DatabaseConnection {
         return s;
     }
 
+    @Override
     public void modificaStudente(Student s) throws SQLException {
         String sql = "UPDATE studenti SET nome=?,cognome=?,numTelefono=?,email=?,dataDiNascita=? WHERE codiceFiscale=?";
         String nome = s.getNome();
