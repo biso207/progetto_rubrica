@@ -69,6 +69,7 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
 
                     // mostrati dati utente
                     showStudentData(s);
+                    txtCdfSearch.setEditable(false);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "STUDENTE NON TROVATO");
                 }
@@ -79,15 +80,11 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // svuotamento text field
-                txtNome.setText("");
-                txtCognome.setText("");
-                txtTelefono.setText("");
-                txtEmail.setText("");
-                txtDataNascita.setText("");
-                txtCdfSearch.setText("");
+                clearTextFields();
 
                 // blocco button conferma
                 btnConfirm.setEnabled(false);
+                txtCdfSearch.setEditable(true);
             }
         });
 
@@ -108,6 +105,8 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
                 if(IsValid.student(s)) {
                     DatabaseConnection.getInstance().modificaStudente(s);
                     JOptionPane.showMessageDialog(null, "STUDENTE MODIFICATO CORRETTAMENTE");
+                    txtCdfSearch.setEditable(true);
+                    clearTextFields();
                 }
                 else{
                     throw new IllegalArgumentException();
@@ -163,5 +162,14 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
         txtEmail.setText(s.getEmail());
         txtDataNascita.setText(String.valueOf(s.getDataNascita()));
         btnConfirm.setEnabled(true);
+    }
+
+    public void clearTextFields(){
+        txtNome.setText("");
+        txtCognome.setText("");
+        txtTelefono.setText("");
+        txtEmail.setText("");
+        txtDataNascita.setText("");
+        txtCdfSearch.setText("");
     }
 }
