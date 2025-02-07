@@ -30,7 +30,7 @@ public class DatabaseConnection implements Database<SQLException>{
             dataSource.setPortNumber(3306);
             dataSource.setServerName("127.0.0.1");
             dataSource.setUser("root");
-            dataSource.setPassword("root");
+            dataSource.setPassword("root"); // ps da Luca e non Diego
             con = dataSource.getConnection();
         }
         return con;
@@ -40,12 +40,7 @@ public class DatabaseConnection implements Database<SQLException>{
     public int aggiungiStudente(Student s) throws SQLException {
         String sql = "INSERT INTO studenti(nome,cognome,numTelefono,email,dataDiNascita,codiceFiscale) VALUES(?,?,?,?,?,?)";
         PreparedStatement ps = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1,s.getNome());
-        ps.setString(2,s.getCognome());
-        ps.setString(3,s.getTelefono());
-        ps.setString(4,s.getEmail());
-        ps.setString(5,s.getDataNascita().toString());
-        ps.setString(6,s.getCodiceFiscale());
+        setPreparedStatement(ps, s);
         ps.executeUpdate();
         ResultSet rs=ps.getGeneratedKeys();
         rs.next();
@@ -72,19 +67,18 @@ public class DatabaseConnection implements Database<SQLException>{
     @Override
     public void modificaStudente(Student s) throws SQLException {
         String sql = "UPDATE studenti SET nome=?,cognome=?,numTelefono=?,email=?,dataDiNascita=? WHERE codiceFiscale=?";
-        String nome = s.getNome();
-        String cognome = s.getCognome();
-        String telefono=s.getTelefono();
-        String email= s.getEmail();
-        Date data = (Date) s.getDataNascita();
-        String codiceFiscale=s.getCodiceFiscale();
         PreparedStatement ps = getConnection().prepareStatement(sql);
+        setPreparedStatement(ps, s);
+        ps.executeUpdate();
+    }
+
+    // metodo per settare gli attributi dello studente
+    public void setPreparedStatement(PreparedStatement ps, Student s) throws SQLException {
         ps.setString(1,s.getNome());
         ps.setString(2,s.getCognome());
         ps.setString(3,s.getTelefono());
         ps.setString(4,s.getEmail());
         ps.setString(5,s.getDataNascita().toString());
         ps.setString(6,s.getCodiceFiscale());
-        ps.executeUpdate();
     }
 }
