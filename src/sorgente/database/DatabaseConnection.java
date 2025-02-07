@@ -30,7 +30,7 @@ public class DatabaseConnection implements Database<SQLException>{
             dataSource.setPortNumber(3306);
             dataSource.setServerName("127.0.0.1");
             dataSource.setUser("root");
-            dataSource.setPassword("root"); // ps da Luca e non Diego
+            //dataSource.setPassword("root"); // ps da Luca e non Diego
             con = dataSource.getConnection();
         }
         return con;
