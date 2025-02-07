@@ -47,7 +47,6 @@ public class InsertStudentPanel extends JPanel implements PanelStandard {
                 try {
                     // creazione istanza studente
                     Student s = new Student();
-                    DatabaseConnection db = new DatabaseConnection();
 
                     // setting attributi studente
                     s.setNome(txtNome.getText());
@@ -59,7 +58,7 @@ public class InsertStudentPanel extends JPanel implements PanelStandard {
 
                     // operazione per aggiungere lo studente
                     if(IsValid.student(s)) {
-                        db.aggiungiStudente(s);
+                        DatabaseConnection.getInstance().aggiungiStudente(s);
                         JOptionPane.showMessageDialog(null, "STUDENTE CREATO CORRETTAMENTE");
                     }
                     else{

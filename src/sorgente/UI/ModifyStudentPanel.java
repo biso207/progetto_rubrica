@@ -95,7 +95,6 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
         btnConfirm.addActionListener(e -> {
             // try-catch per stampare il risultato dell'operazione
             try {
-                DatabaseConnection db = new DatabaseConnection();
                 Student s = new Student();
 
                 // setting degli attributi
@@ -107,7 +106,7 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
                 s.setDataNascita(Date.valueOf(txtDataNascita.getText()));
 
                 if(IsValid.student(s)) {
-                    db.modificaStudente(s);
+                    DatabaseConnection.getInstance().modificaStudente(s);
                     JOptionPane.showMessageDialog(null, "STUDENTE MODIFICATO CORRETTAMENTE");
                 }
                 else{
