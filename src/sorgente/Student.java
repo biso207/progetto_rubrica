@@ -6,7 +6,7 @@ Classe sorgente.Student per creare gli oggetti che rappresentano gli studenti de
 // package appartenenza
 package sorgente;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Student {
     // attributi
@@ -45,7 +45,13 @@ public class Student {
 
     // data di nascita
     public void setDataNascita(Date dataNascita) { this.dataNascita = dataNascita; }
-
+    public void setDateString(String dateString){
+        try{
+            setDataNascita(java.sql.Date.valueOf(dateString));
+        }catch (IllegalArgumentException e){
+            dataNascita = null;
+        }
+    }
     // GETTER //
     // nome
     public String getNome() { return nome; }

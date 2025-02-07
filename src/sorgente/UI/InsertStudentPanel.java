@@ -7,6 +7,8 @@ Classe InsertStudentPanel per gestire la grafica della pagina di inserimento stu
 package sorgente.UI;
 
 import sorgente.IsValid;
+import sorgente.Service;
+import sorgente.database.BackendException;
 import sorgente.database.DatabaseConnection;
 import sorgente.Student;
 import javax.swing.*;
@@ -42,34 +44,28 @@ public class InsertStudentPanel extends JPanel implements PanelStandard {
 
         // EVENTS BUTTONS //
         // conferma
-        btnConfirm.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    // creazione istanza studente
-                    Student s = new Student();
+        btnConfirm.addActionListener(e -> {
+            try {
+                // creazione istanza studente
+                Student s = new Student();
 
-                    // setting attributi studente
-                    s.setNome(txtNome.getText());
-                    s.setCognome(txtCognome.getText());
-                    s.setTelefono(txtTelefono.getText());
-                    s.setEmail(txtEmail.getText());
-                    s.setDataNascita(Date.valueOf(txtDataNascita.getText()));
-                    s.setCodiceFiscale(txtCdf.getText());
+                // setting attributi studente
+                s.setNome(txtNome.getText());
+                s.setCognome(txtCognome.getText());
+                s.setTelefono(txtTelefono.getText());
+                s.setEmail(txtEmail.getText());
+                s.setDateString(txtDataNascita.getText());
+                s.setCodiceFiscale(txtCdf.getText());
 
-                    // operazione per aggiungere lo studente
-                    if(IsValid.student(s)) {
-                        DatabaseConnection.getInstance().aggiungiStudente(s);
-                        JOptionPane.showMessageDialog(null, "STUDENTE CREATO CORRETTAMENTE");
-                    }
-                    else{
-                        throw new IllegalArgumentException();
-                    }
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null,"PROBLEMA NELLA CREAZIONE STUDENTE");
-                }catch (IllegalArgumentException ex){
-                    JOptionPane.showMessageDialog(null,"UNO O PIU' CAMPI NON VALIDI");
-                }
+                // operazione per aggiungere lo studente con istanza di service
+                Service service = new Service();
+                service.addStudent(s);
 
+                // messaggio di successo
+                JOptionPane.showMessageDialog(null,"STUDENTE CREATO CON SUCCESSO");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+                ex.printStackTrace();
             }
         });
 

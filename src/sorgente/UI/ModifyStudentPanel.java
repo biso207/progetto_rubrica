@@ -7,6 +7,8 @@ Classe ModifyStudentPanel per gestire la grafica della pagina di modifica studen
 package sorgente.UI;
 
 import sorgente.IsValid;
+import sorgente.Service;
+import sorgente.database.BackendException;
 import sorgente.database.DatabaseConnection;
 import sorgente.Student;
 import javax.swing.*;
@@ -64,57 +66,57 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
             // cliccabile solo se si scrive del testo nella casella del codice fiscale
             if (!txtCdfSearch.getText().isEmpty()) {
                 try {
-                    // creazione oggetto studente studente
-                    Student s = DatabaseConnection.getInstance().ricercaStudente(txtCdfSearch.getText());
+                    // istanza di Service
+                    Service s = new Service();
+
+                    // creazione oggetto studente
+                    Student student = s.searchStudente(txtCdfSearch.getText());
 
                     // mostrati dati utente
-                    showStudentData(s);
+                    showStudentData(student);
+
+                    // campo codice fiscale non editabile
                     txtCdfSearch.setEditable(false);
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "STUDENTE NON TROVATO");
+                }
+                catch (BackendException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
         });
 
         // annullamento operazione
-        btnCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // svuotamento text field
-                clearTextFields();
+        btnCancel.addActionListener(e -> {
+            // svuotamento text field
+            clearTextFields();
 
-                // blocco button conferma
-                btnConfirm.setEnabled(false);
-                txtCdfSearch.setEditable(true);
-            }
+            // blocco button conferma
+            btnConfirm.setEnabled(false);
+            txtCdfSearch.setEditable(true);
         });
 
         // conferma modifica studente
         btnConfirm.addActionListener(e -> {
             // try-catch per stampare il risultato dell'operazione
             try {
+                // creazione istanza studente
                 Student s = new Student();
 
-                // setting degli attributi
+                // setting attributi studente
                 s.setNome(txtNome.getText());
                 s.setCognome(txtCognome.getText());
                 s.setTelefono(txtTelefono.getText());
                 s.setEmail(txtEmail.getText());
+                s.setDateString(txtDataNascita.getText());
                 s.setCodiceFiscale(txtCdfSearch.getText());
-                s.setDataNascita(Date.valueOf(txtDataNascita.getText()));
 
-                if(IsValid.student(s)) {
-                    DatabaseConnection.getInstance().modificaStudente(s);
-                    JOptionPane.showMessageDialog(null, "STUDENTE MODIFICATO CORRETTAMENTE");
-                    txtCdfSearch.setEditable(true);
-                    clearTextFields();
-                }
-                else{
-                    throw new IllegalArgumentException();
-                }
-            } catch (SQLException ex ) {
-                JOptionPane.showMessageDialog(null, "C'E' STATO UN PROBLEMA NELLA MODIFICA STUDENTE");
-            }catch (IllegalArgumentException ex ){
-                JOptionPane.showMessageDialog(null, "UNO O PIU' CAMPI NON VALIDI");
+                // operazione per aggiungere lo studente con istanza di service
+                Service service = new Service();
+                service.modifyStudent(s);
+
+                // messaggio di successo
+                JOptionPane.showMessageDialog(null,"STUDENTE MODIFICATO CON SUCCESSO");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null,ex.getMessage());
             }
         });
     }

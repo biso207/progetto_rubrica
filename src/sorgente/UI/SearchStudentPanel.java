@@ -6,6 +6,8 @@ Classe SearchStudentPanel per gestire la grafica della pagina di ricerca student
 // package appartenenza
 package sorgente.UI;
 
+import sorgente.Service;
+import sorgente.database.BackendException;
 import sorgente.database.DatabaseConnection;
 import sorgente.Student;
 import javax.swing.*;
@@ -54,15 +56,24 @@ public class SearchStudentPanel extends JPanel  implements PanelStandard {
 
         // EVENT BUTTON //
         // evento di ricerca associato al pulsante di ricerca
-        btnSearch.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        btnSearch.addActionListener(e -> {
+            if (!txtCdfSearch.getText().isEmpty()) {
                 try {
-                    Student s = DatabaseConnection.getInstance().ricercaStudente(txtCdfSearch.getText());
-                    showStudentData(s);
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null,"STUDENTE NON TROVATO");
+                    // istanza di Service
+                    Service s = new Service();
+
+                    // creazione oggetto studente
+                    Student student = s.searchStudente(txtCdfSearch.getText());
+
+                    // mostrati dati utente
+                    showStudentData(student);
+
+                    // campo codice fiscale non editabile
+                    txtCdfSearch.setEditable(false);
                 }
-                ;
+                catch (BackendException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
             }
         });
     }

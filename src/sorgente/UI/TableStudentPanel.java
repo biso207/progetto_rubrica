@@ -6,7 +6,9 @@ Classe TableStudentPanel per creare la tabella degli studenti nel database
 // package appartenenza
 package sorgente.UI;
 
+import sorgente.Service;
 import sorgente.Student;
+import sorgente.database.BackendException;
 import sorgente.database.DatabaseConnection;
 
 import javax.swing.*;
@@ -58,11 +60,12 @@ public class TableStudentPanel extends JPanel {
     // metodo per aggiornare i dati della tabella senza ricrearla
     private void refreshTable() {
         try {
+            Service service = new Service();
             // eliminazione righe
             tableModel.setRowCount(0);
 
             // recupero studenti dal database e popolamento arraylist con tutti gli studenti
-            ArrayList<Student> students = DatabaseConnection.getInstance().selezionaTutti();
+            ArrayList<Student> students = service.getAll();
 
             // aggiunta studenti alla tabella tramite for-each
             for (Student s : students) {
@@ -71,8 +74,8 @@ public class TableStudentPanel extends JPanel {
                         s.getEmail(), s.getDataNascita(), s.getCodiceFiscale()
                 });
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "ERRORE CREAZIONE TABELLA");
+        } catch (BackendException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
 }
