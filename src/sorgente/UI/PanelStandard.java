@@ -1,6 +1,10 @@
-package sorgente.UI;
+/*
+Luca Bisognin e Diego Ferventi - 7/2/2025
+Interfaccia PanelStandard per i metodi utili alle classi che gestiscono le schermate grafiche
+*/
 
-import sorgente.Student;
+// package appartenenza
+package sorgente.UI;
 
 import javax.swing.*;
 

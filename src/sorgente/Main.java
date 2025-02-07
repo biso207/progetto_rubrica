@@ -1,5 +1,5 @@
 /*
-Luca Bisognin e Diego Ferventi - inizio 6/2/2025
+Luca Bisognin e Diego Ferventi - 6/2/2025
 Classe sorgente.Main del progetto Rubrica
 */
 

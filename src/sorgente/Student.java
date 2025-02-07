@@ -1,7 +1,10 @@
-package sorgente;/*
-Luca Bisognin e Diego Ferventi - inizio 6/2/2025
+/*
+Luca Bisognin e Diego Ferventi - 6/2/2025
 Classe sorgente.Student per creare gli oggetti che rappresentano gli studenti della rubrica
 */
+
+// package appartenenza
+package sorgente;
 
 import java.util.Date;
 

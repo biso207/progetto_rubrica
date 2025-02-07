@@ -1,14 +1,13 @@
 /*
-Luca Bisognin e Diego Ferventi - inizio 6/2/2025
+Luca Bisognin e Diego Ferventi - 6/2/2025
 Classe SearchStudentPanel per gestire la grafica della pagina di ricerca studente
 */
 
 // package appartenenza
 package sorgente.UI;
 
-import sorgente.DatabaseConnection;
+import sorgente.database.DatabaseConnection;
 import sorgente.Student;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

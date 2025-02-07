@@ -1,13 +1,13 @@
 /*
-Luca Bisognin e Diego Ferventi - inizio 6/2/2025
+Luca Bisognin e Diego Ferventi - 6/2/2025
 Classe DatabaseConnector per stabilire la connessione con il database
 */
 
 // package appartenenza
-package sorgente;
+package sorgente.database;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
-
+import sorgente.Student;
 import java.sql.*;
 
 public class DatabaseConnection implements Database<SQLException>{
