@@ -48,6 +48,7 @@ public class InsertStudentPanel extends JPanel implements PanelStandard {
                     // creazione istanza studente
                     Student s = new Student();
                     DatabaseConnection db = new DatabaseConnection();
+
                     // setting attributi studente
                     s.setNome(txtNome.getText());
                     s.setCognome(txtCognome.getText());
@@ -62,7 +63,7 @@ public class InsertStudentPanel extends JPanel implements PanelStandard {
                         JOptionPane.showMessageDialog(null, "STUDENTE CREATO CORRETTAMENTE");
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "UNO O PIU' CAMPI NON VALIDI");
+                        throw new IllegalArgumentException();
                     }
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null,"PROBLEMA NELLA CREAZIONE STUDENTE");

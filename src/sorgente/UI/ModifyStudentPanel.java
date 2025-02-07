@@ -97,19 +97,21 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
             try {
                 DatabaseConnection db = new DatabaseConnection();
                 Student s = new Student();
-                // setting dei valori
+
+                // setting degli attributi
                 s.setNome(txtNome.getText());
                 s.setCognome(txtCognome.getText());
                 s.setTelefono(txtTelefono.getText());
                 s.setEmail(txtEmail.getText());
                 s.setCodiceFiscale(txtCdfSearch.getText());
                 s.setDataNascita(Date.valueOf(txtDataNascita.getText()));
+
                 if(IsValid.student(s)) {
                     db.modificaStudente(s);
                     JOptionPane.showMessageDialog(null, "STUDENTE MODIFICATO CORRETTAMENTE");
                 }
                 else{
-                    JOptionPane.showMessageDialog(null, "UNO O PIU' CAMPI NON VALIDI");
+                    throw new IllegalArgumentException();
                 }
             } catch (SQLException ex ) {
                 JOptionPane.showMessageDialog(null, "C'E' STATO UN PROBLEMA NELLA MODIFICA STUDENTE");

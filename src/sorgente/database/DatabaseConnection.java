@@ -9,6 +9,7 @@ package sorgente.database;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import sorgente.Student;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseConnection implements Database<SQLException>{
     private Connection con;
@@ -30,7 +31,7 @@ public class DatabaseConnection implements Database<SQLException>{
             dataSource.setPortNumber(3306);
             dataSource.setServerName("127.0.0.1");
             dataSource.setUser("root");
-            //dataSource.setPassword("root"); // ps da Luca e non Diego
+            dataSource.setPassword("root"); // ps da Luca e non Diego
             con = dataSource.getConnection();
         }
         return con;
@@ -70,6 +71,31 @@ public class DatabaseConnection implements Database<SQLException>{
         PreparedStatement ps = getConnection().prepareStatement(sql);
         setPreparedStatement(ps, s);
         ps.executeUpdate();
+    }
+
+    // metodo per selezionare tutti gli studenti dal database
+    public ArrayList<Student> selezionaTutti() throws SQLException {
+        ArrayList<Student> students = new ArrayList<>();
+
+        String sql="SELECT nome,cognome,numTelefono,email,dataDiNascita,codiceFiscale FROM studenti";
+        PreparedStatement ps=getConnection().prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        while(rs.next()) {
+            Student s = new Student();
+
+            // setting degli attributi
+            s.setNome(rs.getString(1));
+            s.setCognome(rs.getString(2));
+            s.setTelefono(rs.getString(3));
+            s.setEmail(rs.getString(4));
+            s.setDataNascita(Date.valueOf(rs.getString(5)));
+            s.setCodiceFiscale(rs.getString(6));
+
+            students.add(s);
+        }
+
+        return students;
     }
 
     // metodo per settare gli attributi dello studente
