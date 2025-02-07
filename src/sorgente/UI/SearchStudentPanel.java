@@ -58,7 +58,6 @@ public class SearchStudentPanel extends JPanel  implements PanelStandard {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Student s = DatabaseConnection.getInstance().ricercaStudente(txtCdfSearch.getText());
-
                     showStudentData(s);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null,"STUDENTE NON TROVATO");
