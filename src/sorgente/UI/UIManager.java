@@ -15,6 +15,7 @@ public class UIManager {
     }
 
     private void initialize() {
+        // setting del frame
         frame = new JFrame();
         frame.setBounds(100, 100, 920, 555);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,7 +26,7 @@ public class UIManager {
         tabbedPane.setBounds(10, 10, 864, 480);
         frame.getContentPane().add(tabbedPane);
 
-        // Aggiunta delle classi per ogni funzionalità
+        // aggiunta classi per ogni funzionalità
         tabbedPane.addTab("Inserisci Studente", new InsertStudentPanel());
         tabbedPane.addTab("Modifica Studente", new ModifyStudentPanel());
         tabbedPane.addTab("Cerca Studente", new SearchStudentPanel());
