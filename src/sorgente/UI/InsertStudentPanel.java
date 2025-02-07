@@ -6,6 +6,7 @@ Classe InsertStudentPanel per gestire la grafica della pagina di inserimento stu
 // package appartenenza
 package sorgente.UI;
 
+import sorgente.IsValid;
 import sorgente.database.DatabaseConnection;
 import sorgente.Student;
 import javax.swing.*;
@@ -46,7 +47,7 @@ public class InsertStudentPanel extends JPanel implements PanelStandard {
                 try {
                     // creazione istanza studente
                     Student s = new Student();
-
+                    DatabaseConnection db = new DatabaseConnection();
                     // setting attributi studente
                     s.setNome(txtNome.getText());
                     s.setCognome(txtCognome.getText());
@@ -56,12 +57,19 @@ public class InsertStudentPanel extends JPanel implements PanelStandard {
                     s.setCodiceFiscale(txtCdf.getText());
 
                     // operazione per aggiungere lo studente
-                    DatabaseConnection.getInstance().aggiungiStudente(s);
-                    JOptionPane.showMessageDialog(null,"STUDENTE CREATO CON SUCCESSO");
-                } catch (SQLException | IllegalArgumentException ex) {
+                    if(IsValid.student(s)) {
+                        db.aggiungiStudente(s);
+                        JOptionPane.showMessageDialog(null, "STUDENTE CREATO CORRETTAMENTE");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "UNO O PIU' CAMPI NON VALIDI");
+                    }
+                } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null,"PROBLEMA NELLA CREAZIONE STUDENTE");
+                }catch (IllegalArgumentException ex){
+                    JOptionPane.showMessageDialog(null,"UNO O PIU' CAMPI NON VALIDI");
                 }
-                ;
+
             }
         });
 

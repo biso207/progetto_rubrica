@@ -6,6 +6,7 @@ Classe ModifyStudentPanel per gestire la grafica della pagina di modifica studen
 // package appartenenza
 package sorgente.UI;
 
+import sorgente.IsValid;
 import sorgente.database.DatabaseConnection;
 import sorgente.Student;
 import javax.swing.*;
@@ -92,23 +93,28 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
 
         // conferma modifica studente
         btnConfirm.addActionListener(e -> {
-            DatabaseConnection db = new DatabaseConnection();
-
-            Student s = new Student();
-            // setting dei valori
-            s.setNome(txtNome.getText());
-            s.setCognome(txtCognome.getText());
-            s.setTelefono(txtTelefono.getText());
-            s.setEmail(txtEmail.getText());
-            s.setDataNascita(Date.valueOf(txtDataNascita.getText()));
-            s.setCodiceFiscale(txtCdfSearch.getText());
-
             // try-catch per stampare il risultato dell'operazione
             try {
-                db.modificaStudente(s);
-                JOptionPane.showMessageDialog(null, "STUDENTE MODIFICATO CORRETTAMENTE");
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
+                DatabaseConnection db = new DatabaseConnection();
+                Student s = new Student();
+                // setting dei valori
+                s.setNome(txtNome.getText());
+                s.setCognome(txtCognome.getText());
+                s.setTelefono(txtTelefono.getText());
+                s.setEmail(txtEmail.getText());
+                s.setCodiceFiscale(txtCdfSearch.getText());
+                s.setDataNascita(Date.valueOf(txtDataNascita.getText()));
+                if(IsValid.student(s)) {
+                    db.modificaStudente(s);
+                    JOptionPane.showMessageDialog(null, "STUDENTE MODIFICATO CORRETTAMENTE");
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "UNO O PIU' CAMPI NON VALIDI");
+                }
+            } catch (SQLException ex ) {
+                JOptionPane.showMessageDialog(null, "C'E' STATO UN PROBLEMA NELLA MODIFICA STUDENTE");
+            }catch (IllegalArgumentException ex ){
+                JOptionPane.showMessageDialog(null, "UNO O PIU' CAMPI NON VALIDI");
             }
         });
     }
