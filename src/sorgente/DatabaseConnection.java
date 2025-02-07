@@ -1,7 +1,10 @@
-package sorgente;/*
+/*
 Luca Bisognin e Diego Ferventi - inizio 6/2/2025
 Classe DatabaseConnector per stabilire la connessione con il database
 */
+
+// package appartenenza
+package sorgente;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
@@ -27,7 +30,7 @@ public class DatabaseConnection implements Database<SQLException>{
             dataSource.setPortNumber(3306);
             dataSource.setServerName("127.0.0.1");
             dataSource.setUser("root");
-            //dataSource.setPassword("root");
+            dataSource.setPassword("root");
             con = dataSource.getConnection();
         }
         return con;

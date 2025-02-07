@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
 
-public class InsertStudentPanel extends JPanel {
+public class InsertStudentPanel extends JPanel implements PanelStandard {
     private JTextField txtNome, txtCognome, txtTelefono, txtEmail, txtDataNascita, txtCdf;
     private JButton btnConfirm, btnCancel;
 
@@ -32,12 +32,12 @@ public class InsertStudentPanel extends JPanel {
         // BUTTONS //
         // conferma operazione
         btnConfirm = new JButton("Conferma");
-        btnConfirm.setBounds(10, 204, 85, 21);
+        btnConfirm.setBounds(10, 220, 85, 21);
         add(btnConfirm);
 
         // annullamento operazione
         btnCancel = new JButton("Annulla");
-        btnCancel.setBounds(139, 204, 85, 21);
+        btnCancel.setBounds(139, 220, 85, 21);
         add(btnCancel);
 
         // EVENTS BUTTONS //
@@ -80,15 +80,16 @@ public class InsertStudentPanel extends JPanel {
         });
     }
 
-    // Metodi utili per creare i componenti
-    private JTextField createTextField(int y) {
+    // metodo per creare un campo di testo
+    public JTextField createTextField(int y) {
         JTextField textField = new JTextField();
-        textField.setBounds(128, y, 96, 19);
+        textField.setBounds(130, y, 100, 20);
         add(textField);
         return textField;
     }
 
-    private JLabel createLabel(String text, int y) {
+    // metodo per creare una label
+    public JLabel createLabel(String text, int y) {
         JLabel label = new JLabel(text);
         label.setBounds(10, y, 100, 13);
         return label;
@@ -102,6 +103,7 @@ public class InsertStudentPanel extends JPanel {
         add(createLabel("Telefono", 74));
         add(createLabel("Email", 106));
         add(createLabel("Data di Nascita", 138));
+        add(createLabel("Codice Fiscale", 170));
     }
 
     // metodo per creare i textFields
@@ -112,6 +114,7 @@ public class InsertStudentPanel extends JPanel {
         txtTelefono = createTextField(74);
         txtEmail = createTextField(106);
         txtDataNascita = createTextField(138);
+        txtCdf = createTextField(170);
     }
 }
 
