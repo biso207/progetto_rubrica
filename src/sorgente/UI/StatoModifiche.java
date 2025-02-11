@@ -44,8 +44,3 @@ public class StatoModifiche  {
     }
 }
 
-// interfaccia per i listener della variabile di stato
-interface StatoListener {
-    void statoCambiato(boolean nuovoStato);
-}
-

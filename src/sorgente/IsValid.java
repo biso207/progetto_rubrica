@@ -8,14 +8,15 @@ package sorgente;
 
 // import librerie
 import java.sql.Date;
-import java.util.Calendar;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class IsValid {
     /* ogni validazione è effettuata tramite delle regex */
 
     // validazione nome e cognome
     public static boolean nome(String s){
-        return !s.matches("^[A-Za-z]+$");
+        return s.matches("^[A-Za-z]+$");
     }
 
     // validazione mail
@@ -30,27 +31,23 @@ public class IsValid {
 
     // validazione data di nascita
     public static boolean data(Date d) {
+        // nessuna data inserita
         if (d == null) {
-            return false;  // nessuna data inserita
+            return false;
+        } else {
+            // controllo validità della data in base all'anno, al mese e al giorno
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            sdf.setLenient(false); // disattiva la correzione automatica della data
+
+            try {
+                // formato della data come stringa per il controllo
+                String dataStr = sdf.format(d);
+                sdf.parse(dataStr); // controllo validità
+                return true;
+            } catch (ParseException e) {
+                return false;
+            }
         }
-
-        // VALIDAZIONE DATA //
-        // oggetto Calendar
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(d);
-
-        // recupero anno, mese e giorno dalla data passata
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-
-        // verifica validità giorno per il mese
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.MONTH, month);
-        cal.set(Calendar.DAY_OF_MONTH, day);
-
-        // return della validità della data
-        return cal.get(Calendar.DAY_OF_MONTH) == day;
     }
 
 
