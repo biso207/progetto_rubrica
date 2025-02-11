@@ -75,14 +75,17 @@ public class Service {
         }
     }
 
-    // metodo per le operazioni di Commit e Rollback sul database
-    public void transactions(int service) {
-        // recupero oggetto Connection
+    // metodo per le operazioni di Commit sul database
+    public void transactions() {
         try {
-            if (service == 1) DatabaseConnection.exeCommit();
-            else DatabaseConnection.exeRollback();
+            DatabaseConnection.getInstance().exeCommit(); // commit confermato
         } catch (SQLException e) {
-            throw new BackendException("ERRORE CONNESSIONE AL SERVER");
+            // errore durante l'aggiornamento
+            try {
+                DatabaseConnection.getInstance().exeRollback(); // annullamento modifiche in caso di errores
+            } catch (SQLException ex) {
+                throw new BackendException("ERRORE: " + ex.getMessage());
+            }
         }
     }
 }

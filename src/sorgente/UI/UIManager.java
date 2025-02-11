@@ -33,8 +33,7 @@ public class UIManager {
         tabbedPane.addTab("Inserisci Studente", new InsertStudentPanel());
         tabbedPane.addTab("Modifica Studente", new ModifyStudentPanel());
         tabbedPane.addTab("Cerca Studente", new SearchStudentPanel());
-        tabbedPane.addTab("Tabella Studente", new TableStudentPanel());
-        tabbedPane.addTab("Commit/Rollback", new CommitRollbackPanel());
+        tabbedPane.addTab("Tabella Studenti", new TableStudentPanel());
     }
 }
 

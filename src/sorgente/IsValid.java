@@ -8,18 +8,14 @@ package sorgente;
 
 // import librerie
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.util.Calendar;
 
 public class IsValid {
-    /* Ogni validazione è effettuata tramite delle regex */
+    /* ogni validazione è effettuata tramite delle regex */
 
     // validazione nome e cognome
     public static boolean nome(String s){
-        return s.matches("^[A-Za-z]+$");
+        return !s.matches("^[A-Za-z]+$");
     }
 
     // validazione mail
@@ -33,24 +29,30 @@ public class IsValid {
     }
 
     // validazione data di nascita
-    public static boolean data(Date d){
-        // nessuna data inserita
-        if(d==null){
-            return false;
+    public static boolean data(Date d) {
+        if (d == null) {
+            return false;  // nessuna data inserita
         }
-        else {
-            // controllo validità della data in base all'anno, al mese e al giorno
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            sdf.setLenient(false); // correzione automatica della data disattivata
 
-            try {
-                sdf.parse(String.valueOf(d)); // controllo validità
-                return true;
-            } catch (ParseException e) {
-                return false;
-            }
-        }
+        // VALIDAZIONE DATA //
+        // oggetto Calendar
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(d);
+
+        // recupero anno, mese e giorno dalla data passata
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        // verifica validità giorno per il mese
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+
+        // return della validità della data
+        return cal.get(Calendar.DAY_OF_MONTH) == day;
     }
+
 
     // validazione codice fiscale
     public static boolean codiceFiscale(String s){

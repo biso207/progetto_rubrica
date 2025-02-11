@@ -42,7 +42,7 @@ public class DatabaseConnection {
     }
 
     // metodo per eseguire il commit delle modifiche
-    public static void exeCommit() throws SQLException {
+    public void exeCommit() throws SQLException {
         if (con != null) {
             con.commit();
             JOptionPane.showMessageDialog(null,"MODIFICHE SALVATE CORRETTAMENTE");
@@ -50,7 +50,7 @@ public class DatabaseConnection {
     }
 
     // metodo per eseguire il rollback delle modifiche
-    public static void exeRollback() throws SQLException {
+    public void exeRollback() throws SQLException {
         if (con != null) {
             con.rollback();
             JOptionPane.showMessageDialog(null,"MODIFICHE ANNULLATE");

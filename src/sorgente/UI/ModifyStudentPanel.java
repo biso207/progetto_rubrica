@@ -110,8 +110,7 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
                 service.modifyStudent(s);
 
                 // modifiche effettuate
-                boolean nuovoStato = !StatoModifiche.getInstance().getState();
-                StatoModifiche.getInstance().setState(nuovoStato);
+                StatoModifiche.getInstance().setState(true);
 
                 // messaggio di successo
                 JOptionPane.showMessageDialog(null,"STUDENTE MODIFICATO CON SUCCESSO");

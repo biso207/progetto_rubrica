@@ -18,25 +18,45 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class TableStudentPanel extends JPanel implements StatoListener {
-    private final JButton btnRefresh;
+    private final JButton btnRefresh, btnCommit;
     private DefaultTableModel tableModel;
 
     // costruttore
     public TableStudentPanel() {
+        Service s = new Service();
         setLayout(new BorderLayout());
 
         // classe registrata come listener
         StatoModifiche.getInstance().addListener(this);
 
+        // BUTTONS //
         // button refresh pagina
         btnRefresh = new JButton("Aggiorna");
+        btnRefresh.setBounds(10, 10, 85, 21);
         btnRefresh.addActionListener(_ -> refreshTable());
         btnRefresh.setForeground(Color.BLACK);
+
+        // button per il commit
+        btnCommit = new JButton("Commit");
+        btnCommit.setBounds(110, 10, 85, 21);
+        btnCommit.setEnabled(StatoModifiche.getInstance().getState()); // stato di blocco del button
+        add(btnCommit); // aggiunta button
 
         // aggiunto pulsante refresh
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         topPanel.add(btnRefresh);
         add(topPanel, BorderLayout.NORTH);
+
+        // EVENT BUTTON //
+        // esecuzione del commit
+        btnCommit.addActionListener(_ -> {
+            // richiamo del commit
+            s.transactions();
+
+            // cambio stato modifiche
+            boolean stato = !StatoModifiche.getInstance().getState();
+            StatoModifiche.getInstance().setState(stato);
+        });
 
         // creazione tabella
         createTable();
@@ -86,5 +106,8 @@ public class TableStudentPanel extends JPanel implements StatoListener {
     public void statoCambiato(boolean nuovoStato) {
         if (nuovoStato) btnRefresh.setForeground(Color.RED);
         else btnRefresh.setForeground(Color.BLACK);
+
+        // blocco/sblocco pulsante commit
+        btnCommit.setEnabled(nuovoStato);
     }
 }
