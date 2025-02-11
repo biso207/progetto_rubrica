@@ -6,16 +6,14 @@ Classe ModifyStudentPanel per gestire la grafica della pagina di modifica studen
 // package appartenenza
 package sorgente.UI;
 
-import sorgente.IsValid;
+// import codici
+import sorgente.Main;
 import sorgente.Service;
+
+// import librerie
 import sorgente.database.BackendException;
-import sorgente.database.DatabaseConnection;
 import sorgente.Student;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.sql.SQLException;
 
 public class ModifyStudentPanel extends JPanel implements PanelStandard {
     private JTextField txtCdfSearch, txtNome, txtCognome, txtTelefono, txtEmail, txtDataNascita;
@@ -29,7 +27,6 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
 
         // creazione text fields
         createTextFields();
-
 
         // CODICE FISCALE //
         // label di riferimento
@@ -89,9 +86,8 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
             // svuotamento text field
             clearTextFields();
 
-            // blocco button conferma
-            btnConfirm.setEnabled(false);
-            txtCdfSearch.setEditable(true);
+            btnConfirm.setEnabled(false); // blocco button conferma
+            txtCdfSearch.setEditable(true); // sblocco area di ricerca
         });
 
         // conferma modifica studente
@@ -112,6 +108,9 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
                 // operazione per aggiungere lo studente con istanza di service
                 Service service = new Service();
                 service.modifyStudent(s);
+
+                // modifiche effettuate
+                UIManager.setChanged();
 
                 // messaggio di successo
                 JOptionPane.showMessageDialog(null,"STUDENTE MODIFICATO CON SUCCESSO");
@@ -166,6 +165,7 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
         btnConfirm.setEnabled(true);
     }
 
+    // metodo per "pulire" i campi di testo all'annullamento dell'operazione
     public void clearTextFields(){
         txtNome.setText("");
         txtCognome.setText("");

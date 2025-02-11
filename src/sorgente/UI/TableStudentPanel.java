@@ -6,15 +6,15 @@ Classe TableStudentPanel per creare la tabella degli studenti nel database
 // package appartenenza
 package sorgente.UI;
 
+// import codici
 import sorgente.Service;
 import sorgente.Student;
 import sorgente.database.BackendException;
-import sorgente.database.DatabaseConnection;
 
+// import librerie
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class TableStudentPanel extends JPanel {
@@ -26,17 +26,20 @@ public class TableStudentPanel extends JPanel {
     public TableStudentPanel() {
         setLayout(new BorderLayout()); // Usare un layout adeguato
 
-        // Creazione tabella
-        createTable();
-
         // button refresh pagina
         btnRefresh = new JButton("Aggiorna");
         btnRefresh.addActionListener(e -> refreshTable());
+
+        if (UIManager.isChanged) btnRefresh.setForeground(Color.RED);
+        else btnRefresh.setForeground(Color.BLACK);
 
         // aggiunto pulsante refresh
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         topPanel.add(btnRefresh);
         add(topPanel, BorderLayout.NORTH);
+
+        // creazione tabella
+        createTable();
     }
 
     // metodo per la creazione della tabella

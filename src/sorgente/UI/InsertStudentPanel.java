@@ -6,16 +6,15 @@ Classe InsertStudentPanel per gestire la grafica della pagina di inserimento stu
 // package appartenenza
 package sorgente.UI;
 
-import sorgente.IsValid;
+// import codici
+import sorgente.Main;
 import sorgente.Service;
-import sorgente.database.BackendException;
-import sorgente.database.DatabaseConnection;
 import sorgente.Student;
+
+// import librerie
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.sql.SQLException;
 
 public class InsertStudentPanel extends JPanel implements PanelStandard {
     private JTextField txtNome, txtCognome, txtTelefono, txtEmail, txtDataNascita, txtCdf;
@@ -60,6 +59,9 @@ public class InsertStudentPanel extends JPanel implements PanelStandard {
                 // operazione per aggiungere lo studente con istanza di service
                 Service service = new Service();
                 service.addStudent(s);
+
+                // modifiche effettuate
+                UIManager.setChanged();
 
                 // messaggio di successo
                 JOptionPane.showMessageDialog(null,"STUDENTE CREATO CON SUCCESSO");

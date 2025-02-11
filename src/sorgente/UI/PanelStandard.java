@@ -6,6 +6,7 @@ Interfaccia PanelStandard per i metodi utili alle classi che gestiscono le scher
 // package appartenenza
 package sorgente.UI;
 
+// import librerie
 import javax.swing.*;
 
 public interface PanelStandard {

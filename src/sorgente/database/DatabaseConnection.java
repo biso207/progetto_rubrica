@@ -6,35 +6,57 @@ Classe DatabaseConnector per stabilire la connessione con il database
 // package appartenenza
 package sorgente.database;
 
+// import librerie
 import com.mysql.cj.jdbc.MysqlDataSource;
-import sorgente.Student;
+
+import javax.swing.*;
 import java.sql.*;
-import java.util.ArrayList;
 
 public class DatabaseConnection {
-    private Connection con;
+    private static Connection con;
     private static DatabaseConnection dc;
 
     // metodo per creare un'istanza della classe
     public static DatabaseConnection getInstance() {
-        if(dc==null) {
-            dc=new DatabaseConnection();
+        if(dc == null) {
+            dc = new DatabaseConnection();
         }
         return dc;
     }
 
     // metodo per stabilire la connessione con il database
     public Connection getConnection() throws SQLException {
-        if (con==null){
+        if (con==null || con.isClosed()) {
             MysqlDataSource dataSource = new MysqlDataSource();
             dataSource.setDatabaseName("rubrica");
             dataSource.setPortNumber(3306);
             dataSource.setServerName("127.0.0.1");
             dataSource.setUser("root");
-            dataSource.setPassword("root"); // ps da Luca e non Diego
+            dataSource.setPassword("root"); // psw da Luca e non Diego
             con = dataSource.getConnection();
+
+            // auto commit disattivato
+            con.setAutoCommit(false);
         }
         return con;
+    }
+
+    // metodo per eseguire il commit delle modifiche
+    public static void commit() throws SQLException {
+        if (con != null) {
+            con.commit();
+            System.out.println("✅ Commit eseguito!");
+            JOptionPane.showMessageDialog(null,"MODIFICHE SALVATE CORRETTAMENTE");
+        }
+    }
+
+    // metodo per eseguire il rollback delle modifiche
+    public static void rollback() throws SQLException {
+        if (con != null) {
+            con.rollback();
+            System.out.println("❌ Rollback eseguito!");
+            JOptionPane.showMessageDialog(null,"MODIFICHE ANNULLATE");
+        }
     }
 
 }

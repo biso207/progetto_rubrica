@@ -6,18 +6,17 @@ Classe SearchStudentPanel per gestire la grafica della pagina di ricerca student
 // package appartenenza
 package sorgente.UI;
 
+// import codice
 import sorgente.Service;
+
+// import librerie
 import sorgente.database.BackendException;
-import sorgente.database.DatabaseConnection;
 import sorgente.Student;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 public class SearchStudentPanel extends JPanel  implements PanelStandard {
     private JTextField txtCdfSearch, txtNome, txtCognome, txtTelefono, txtEmail, txtDataNascita;
-    private JButton btnSearch;
+    private JButton btnSearch, btnCancel;
 
     // costruttore
     public SearchStudentPanel() {
@@ -48,13 +47,18 @@ public class SearchStudentPanel extends JPanel  implements PanelStandard {
         txtEmail.setEditable(false);
         txtDataNascita.setEditable(false);
 
-        // BUTTON //
+        // BUTTONS //
         // pulsante per avviare la ricerca
         btnSearch = new JButton("Cerca");
         btnSearch.setBounds(250, 10, 85, 19);
         add(btnSearch);
 
-        // EVENT BUTTON //
+        // annullamento operazione
+        btnCancel = new JButton("Reset");
+        btnCancel.setBounds(139, 220, 85, 21);
+        add(btnCancel);
+
+        // EVENTS BUTTONS //
         // evento di ricerca associato al pulsante di ricerca
         btnSearch.addActionListener(e -> {
             if (!txtCdfSearch.getText().isEmpty()) {
@@ -68,13 +72,22 @@ public class SearchStudentPanel extends JPanel  implements PanelStandard {
                     // mostrati dati utente
                     showStudentData(student);
 
-                    // campo codice fiscale non editabile
+                    // blocco area di testo del codice fiscale
                     txtCdfSearch.setEditable(false);
                 }
                 catch (BackendException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
+        });
+
+        // evento di ripristino della ricerca
+        btnCancel.addActionListener(e -> {
+            // svuotamento text field
+            clearTextFields();
+
+            // sblocco area di testo del codice fiscale
+            txtCdfSearch.setEditable(true);
         });
     }
 
@@ -120,5 +133,15 @@ public class SearchStudentPanel extends JPanel  implements PanelStandard {
         txtTelefono.setText(s.getTelefono());
         txtEmail.setText(s.getEmail());
         txtDataNascita.setText(String.valueOf(s.getDataNascita()));
+    }
+
+    // metodo per "pulire" i campi di testo al reset della ricerca
+    public void clearTextFields(){
+        txtNome.setText("");
+        txtCognome.setText("");
+        txtTelefono.setText("");
+        txtEmail.setText("");
+        txtDataNascita.setText("");
+        txtCdfSearch.setText("");
     }
 }

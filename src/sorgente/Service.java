@@ -1,8 +1,18 @@
+/*
+Luca Bisognin e Diego Ferventi - 7/2/2025
+Classe Service che fa da ponte tra le parte UI e la parte di gestione del database del progetto
+*/
+
+// package di appartenenza
 package sorgente;
 
+// import dei codici
 import sorgente.database.BackendException;
 import sorgente.database.DAOStudent;
+import sorgente.database.DatabaseConnection;
 
+// import librerie
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -63,6 +73,17 @@ public class Service {
             return dao.selezionaTutti();
         } catch (SQLException e) {
             throw new BackendException("ERRORE CREAZIONE TABELLA");
+        }
+    }
+
+    // metodo per le operazioni di Commit e Rollback sul database
+    public void transactions(int service) {
+        // recupero oggetto Connection
+        try {
+            if (service == 1) DatabaseConnection.commit();
+            else DatabaseConnection.rollback();
+        } catch (SQLException e) {
+            throw new BackendException("ERRORE CONNESSIONE AL SERVER");
         }
     }
 }

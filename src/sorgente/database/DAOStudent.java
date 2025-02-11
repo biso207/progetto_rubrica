@@ -1,12 +1,20 @@
+/*
+Luca Bisognin e Diego Ferventi - 6/2/2025
+Classe DAOStudent per gestire le operazioni di CRUD del database
+*/
+
+// package di appartenenza
 package sorgente.database;
 
+// import codici
 import sorgente.Student;
 
+// import librerie
 import java.sql.*;
 import java.util.ArrayList;
 
 public class DAOStudent implements Database<SQLException> {
-    private DatabaseConnection db;
+    private final DatabaseConnection db;
 
     // costruttore
     public DAOStudent() {
@@ -87,5 +95,9 @@ public class DAOStudent implements Database<SQLException> {
         ps.setString(4,s.getEmail());
         ps.setString(5,s.getDataNascita().toString());
         ps.setString(6,s.getCodiceFiscale());
+    }
+
+    public Connection getConnection() throws SQLException {
+        return db.getConnection();
     }
 }
