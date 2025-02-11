@@ -32,6 +32,9 @@ public class Service {
         if (errors.isEmpty()) {
             try {
                 dao.aggiungiStudente(s);
+
+                // chiamata commit/rollback
+                transactions();
             } catch (SQLException e) {
                 throw new BackendException("Qualcosa è andato storto :(");
             }
@@ -58,6 +61,9 @@ public class Service {
         if (errors.isEmpty()) {
             try {
                 dao.modificaStudente(s);
+
+                // chiamata commit/rollback
+                transactions();
             } catch (SQLException e) {
                 throw new BackendException("Qualcosa è andato storto :(");
             }
@@ -82,7 +88,7 @@ public class Service {
         } catch (SQLException e) {
             // errore durante l'aggiornamento
             try {
-                DatabaseConnection.getInstance().exeRollback(); // annullamento modifiche in caso di errores
+                DatabaseConnection.getInstance().exeRollback(); // annullamento modifiche in caso di errori
             } catch (SQLException ex) {
                 throw new BackendException("ERRORE: " + ex.getMessage());
             }

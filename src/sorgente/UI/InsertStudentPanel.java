@@ -56,9 +56,6 @@ public class InsertStudentPanel extends JPanel implements PanelStandard {
                 Service service = new Service();
                 service.addStudent(s);
 
-                // modifiche effettuate
-                StatoModifiche.getInstance().setState(true);
-
                 // messaggio di successo
                 JOptionPane.showMessageDialog(null,"STUDENTE CREATO CON SUCCESSO");
             } catch (Exception ex) {
