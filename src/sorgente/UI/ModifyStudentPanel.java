@@ -7,7 +7,6 @@ Classe ModifyStudentPanel per gestire la grafica della pagina di modifica studen
 package sorgente.UI;
 
 // import codici
-import sorgente.Main;
 import sorgente.Service;
 
 // import librerie
@@ -16,8 +15,9 @@ import sorgente.Student;
 import javax.swing.*;
 
 public class ModifyStudentPanel extends JPanel implements PanelStandard {
-    private JTextField txtCdfSearch, txtNome, txtCognome, txtTelefono, txtEmail, txtDataNascita;
-    private JButton btnSearch, btnConfirm, btnCancel;
+    private final JTextField txtCdfSearch;
+    private JTextField txtNome, txtCognome, txtTelefono, txtEmail, txtDataNascita;
+    private final JButton btnConfirm;
 
     public ModifyStudentPanel() {
         setLayout(null);
@@ -48,18 +48,18 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
         add(btnConfirm);
 
         // annullamento operazione
-        btnCancel = new JButton("Annulla");
+        JButton btnCancel = new JButton("Annulla");
         btnCancel.setBounds(139, 220, 85, 21);
         add(btnCancel);
 
         // pulsante per avviare la ricerca
-        btnSearch = new JButton("Cerca");
+        JButton btnSearch = new JButton("Cerca");
         btnSearch.setBounds(250, 10, 85, 19);
         add(btnSearch);
 
         // EVENTS BUTTONS //
         // ricerca studente
-        btnSearch.addActionListener(e -> {
+        btnSearch.addActionListener(_ -> {
             // cliccabile solo se si scrive del testo nella casella del codice fiscale
             if (!txtCdfSearch.getText().isEmpty()) {
                 try {
@@ -82,7 +82,7 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
         });
 
         // annullamento operazione
-        btnCancel.addActionListener(e -> {
+        btnCancel.addActionListener(_ -> {
             // svuotamento text field
             clearTextFields();
 
@@ -91,7 +91,7 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
         });
 
         // conferma modifica studente
-        btnConfirm.addActionListener(e -> {
+        btnConfirm.addActionListener(_ -> {
             // try-catch per stampare il risultato dell'operazione
             try {
                 // creazione istanza studente
@@ -110,7 +110,8 @@ public class ModifyStudentPanel extends JPanel implements PanelStandard {
                 service.modifyStudent(s);
 
                 // modifiche effettuate
-                UIManager.setChanged();
+                boolean nuovoStato = !StatoModifiche.getInstance().getState();
+                StatoModifiche.getInstance().setState(nuovoStato);
 
                 // messaggio di successo
                 JOptionPane.showMessageDialog(null,"STUDENTE MODIFICATO CON SUCCESSO");

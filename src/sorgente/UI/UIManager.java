@@ -11,13 +11,10 @@ import javax.swing.*;
 
 public class UIManager {
     public JFrame frame;
-    // variabile per controllare se sono stati effettuati cambiamenti per il database
-    public static boolean isChanged;
 
     // costruttore
     public UIManager() {
         initialize();
-        isChanged = false;
     }
 
     private void initialize() {
@@ -37,16 +34,7 @@ public class UIManager {
         tabbedPane.addTab("Modifica Studente", new ModifyStudentPanel());
         tabbedPane.addTab("Cerca Studente", new SearchStudentPanel());
         tabbedPane.addTab("Tabella Studente", new TableStudentPanel());
-        tabbedPane.addTab("Commit/Rollback", new OperationsPanel());
-    }
-
-    public static void setChanged() {
-        isChanged = !isChanged;
-    }
-
-    // getter dello stato modifiche
-    public static boolean getChanged() {
-        return isChanged;
+        tabbedPane.addTab("Commit/Rollback", new CommitRollbackPanel());
     }
 }
 

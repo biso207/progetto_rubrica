@@ -7,18 +7,14 @@ Classe InsertStudentPanel per gestire la grafica della pagina di inserimento stu
 package sorgente.UI;
 
 // import codici
-import sorgente.Main;
 import sorgente.Service;
 import sorgente.Student;
 
 // import librerie
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class InsertStudentPanel extends JPanel implements PanelStandard {
     private JTextField txtNome, txtCognome, txtTelefono, txtEmail, txtDataNascita, txtCdf;
-    private JButton btnConfirm, btnCancel;
 
     // costruttore
     public InsertStudentPanel() {
@@ -32,18 +28,18 @@ public class InsertStudentPanel extends JPanel implements PanelStandard {
 
         // BUTTONS //
         // conferma operazione
-        btnConfirm = new JButton("Conferma");
+        JButton btnConfirm = new JButton("Conferma");
         btnConfirm.setBounds(10, 220, 85, 21);
         add(btnConfirm);
 
         // annullamento operazione
-        btnCancel = new JButton("Annulla");
+        JButton btnCancel = new JButton("Annulla");
         btnCancel.setBounds(139, 220, 85, 21);
         add(btnCancel);
 
         // EVENTS BUTTONS //
         // conferma
-        btnConfirm.addActionListener(e -> {
+        btnConfirm.addActionListener(_ -> {
             try {
                 // creazione istanza studente
                 Student s = new Student();
@@ -61,7 +57,8 @@ public class InsertStudentPanel extends JPanel implements PanelStandard {
                 service.addStudent(s);
 
                 // modifiche effettuate
-                UIManager.setChanged();
+                boolean nuovoStato = !StatoModifiche.getInstance().getState();
+                StatoModifiche.getInstance().setState(nuovoStato);
 
                 // messaggio di successo
                 JOptionPane.showMessageDialog(null,"STUDENTE CREATO CON SUCCESSO");
@@ -72,16 +69,14 @@ public class InsertStudentPanel extends JPanel implements PanelStandard {
         });
 
         // annullamento operazione
-        btnCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // svuotamento text field
-                txtNome.setText("");
-                txtCognome.setText("");
-                txtTelefono.setText("");
-                txtEmail.setText("");
-                txtDataNascita.setText("");
-                txtCdf.setText("");
-            }
+        btnCancel.addActionListener(_ -> {
+            // svuotamento text field
+            txtNome.setText("");
+            txtCognome.setText("");
+            txtTelefono.setText("");
+            txtEmail.setText("");
+            txtDataNascita.setText("");
+            txtCdf.setText("");
         });
     }
 

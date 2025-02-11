@@ -12,7 +12,6 @@ import sorgente.database.DAOStudent;
 import sorgente.database.DatabaseConnection;
 
 // import librerie
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -80,8 +79,8 @@ public class Service {
     public void transactions(int service) {
         // recupero oggetto Connection
         try {
-            if (service == 1) DatabaseConnection.commit();
-            else DatabaseConnection.rollback();
+            if (service == 1) DatabaseConnection.exeCommit();
+            else DatabaseConnection.exeRollback();
         } catch (SQLException e) {
             throw new BackendException("ERRORE CONNESSIONE AL SERVER");
         }

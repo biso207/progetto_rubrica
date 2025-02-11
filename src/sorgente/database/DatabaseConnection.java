@@ -42,19 +42,17 @@ public class DatabaseConnection {
     }
 
     // metodo per eseguire il commit delle modifiche
-    public static void commit() throws SQLException {
+    public static void exeCommit() throws SQLException {
         if (con != null) {
             con.commit();
-            System.out.println("✅ Commit eseguito!");
             JOptionPane.showMessageDialog(null,"MODIFICHE SALVATE CORRETTAMENTE");
         }
     }
 
     // metodo per eseguire il rollback delle modifiche
-    public static void rollback() throws SQLException {
+    public static void exeRollback() throws SQLException {
         if (con != null) {
             con.rollback();
-            System.out.println("❌ Rollback eseguito!");
             JOptionPane.showMessageDialog(null,"MODIFICHE ANNULLATE");
         }
     }

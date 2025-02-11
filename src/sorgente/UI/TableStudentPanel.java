@@ -17,21 +17,21 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class TableStudentPanel extends JPanel {
-    private JButton btnRefresh;
-    private JTable table;
+public class TableStudentPanel extends JPanel implements StatoListener {
+    private final JButton btnRefresh;
     private DefaultTableModel tableModel;
 
     // costruttore
     public TableStudentPanel() {
-        setLayout(new BorderLayout()); // Usare un layout adeguato
+        setLayout(new BorderLayout());
+
+        // classe registrata come listener
+        StatoModifiche.getInstance().addListener(this);
 
         // button refresh pagina
         btnRefresh = new JButton("Aggiorna");
-        btnRefresh.addActionListener(e -> refreshTable());
-
-        if (UIManager.isChanged) btnRefresh.setForeground(Color.RED);
-        else btnRefresh.setForeground(Color.BLACK);
+        btnRefresh.addActionListener(_ -> refreshTable());
+        btnRefresh.setForeground(Color.BLACK);
 
         // aggiunto pulsante refresh
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -49,7 +49,7 @@ public class TableStudentPanel extends JPanel {
 
         // tabella
         tableModel = new DefaultTableModel(columnNames, 0);
-        table = new JTable(tableModel);
+        JTable table = new JTable(tableModel);
         table.setFillsViewportHeight(true);
 
         // inserimento della table in un scrollPane
@@ -80,5 +80,11 @@ public class TableStudentPanel extends JPanel {
         } catch (BackendException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
+    }
+
+    @Override
+    public void statoCambiato(boolean nuovoStato) {
+        if (nuovoStato) btnRefresh.setForeground(Color.RED);
+        else btnRefresh.setForeground(Color.BLACK);
     }
 }
